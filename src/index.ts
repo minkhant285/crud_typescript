@@ -2,6 +2,9 @@ import http from 'http';
 import express, { Express } from 'express';
 import { envData } from './environment';
 import routes from './routes/user.routes';
+import "reflect-metadata"
+import { AppDataSource } from './db/data-source';
+
 const router: Express = express();
 
 /** Parse the request */
@@ -40,4 +43,5 @@ router.use((req, res, next) => {
 
 const httpServer = http.createServer(router);
 const PORT: any = envData.app_port;
+AppDataSource.initialize().then(() => console.log("DB initialized!!")).catch((err) => console.log(err));
 httpServer.listen(PORT, () => console.log(`The server is running on port ${PORT}`));
