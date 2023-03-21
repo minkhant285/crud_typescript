@@ -1,6 +1,7 @@
 import http from 'http';
 import express, { Express } from 'express';
 import { envData } from './environment';
+import routes from './routes/user.routes';
 const router: Express = express();
 
 /** Parse the request */
@@ -27,8 +28,7 @@ router.use((req, res, next) => {
 });
 
 /** Routes */
-router.use('/', (req, res) => res.send('Hello world!'));
-
+router.use('/api', routes);
 /** Error handling */
 router.use((req, res, next) => {
     const error = new Error('not found');
