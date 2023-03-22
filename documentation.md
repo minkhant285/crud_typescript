@@ -4,7 +4,7 @@
 1.  Prerequisites
 2. Project Setup
 3. Running Project
-4. Add API Routes
+4. Adding API Routes
 5. Apply Type-ORM  for db control
 6. Adding  Models, Services and Controllers
 7. Test with API Tester (eg. postman, thunderclient)
