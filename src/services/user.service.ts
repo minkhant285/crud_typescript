@@ -1,7 +1,7 @@
 import { AppDataSource } from "../db/data-source";
 import { User } from "../db/entities/user.entity";
 import { IUser, IUserInput } from "../models/user.model";
-import { Repository, UpdateResult, DeleteResult } from "typeorm";
+import { Repository, UpdateResult, DeleteResult, ILike } from "typeorm";
 
 export class UserService {
     private userRepository: Repository<User>;
@@ -16,6 +16,10 @@ export class UserService {
 
     async selectUserById(id: number) {
         return await this.userRepository.findOne({ where: { id } });
+    }
+
+    async searchUserByName(name: string) {
+        return await this.userRepository.find({ where: { name: ILike(`%${name}%`) } });
     }
 
     async createUser(userData: IUserInput): Promise<IUser> {

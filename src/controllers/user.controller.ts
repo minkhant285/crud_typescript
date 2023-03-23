@@ -29,6 +29,15 @@ const getUser = async (req: Request, res: Response) => {
     }
 };
 
+const searchUser = async (req: Request, res: Response) => {
+    let name: string = req.params.name || '';
+    let users: IUser[] | [] = await userService.searchUserByName(name);
+    return res.status(200).json({
+        data: users,
+        status: res.statusCode
+    });
+};
+
 // updating a user
 const updateUser = async (req: Request, res: Response) => {
     let id: string = req.params.id; // get the user id from the req.params
@@ -76,4 +85,4 @@ const uploadPhoto = async (req: Request, res: Response) => {
     }
 }
 
-export default { getUsers, getUser, updateUser, deleteUser, addUser, uploadPhoto };
+export default { getUsers, getUser, updateUser, deleteUser, addUser, uploadPhoto, searchUser };

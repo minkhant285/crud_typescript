@@ -5,6 +5,7 @@ import { upload } from '../utils/diskStorage';
 const router = express.Router();
 router.get('/users', controller.getUsers);
 router.get('/users/:id', controller.getUser);
+router.get('/users/search/:name', controller.searchUser);
 router.put('/users/:id', controller.updateUser);
 router.delete('/users/:id', controller.deleteUser);
 router.post('/users', controller.addUser);
