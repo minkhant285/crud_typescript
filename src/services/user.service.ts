@@ -1,6 +1,6 @@
 import { AppDataSource } from "../db/data-source";
 import { User } from "../db/entities/user.entity";
-import { IUser } from "../models/user.model";
+import { IUser, IUserInput } from "../models/user.model";
 import { Repository, UpdateResult, DeleteResult } from "typeorm";
 
 export class UserService {
@@ -10,20 +10,30 @@ export class UserService {
         this.userRepository = AppDataSource.getRepository(User)
     }
 
-    async selectUsers(): Promise<IUser[]> {
+    async selectUsers() {
         return await this.userRepository.find();
     }
 
-    async selectUserById(id: number): Promise<IUser | null> {
+    async selectUserById(id: number) {
         return await this.userRepository.findOne({ where: { id } });
     }
 
-    async createUser(userData: IUser): Promise<IUser> {
+    async createUser(userData: IUserInput): Promise<IUser> {
         return await this.userRepository.save(userData);
     }
 
     async updateUser(id: number, userData: IUser): Promise<UpdateResult> {
         return await this.userRepository.update(id, userData);
+    }
+
+    async updatePhoto(id: number, photoUrl: string): Promise<UpdateResult> {
+        return await this.userRepository.createQueryBuilder()
+            .update(User)
+            .set({
+                photoUrl: photoUrl,
+            })
+            .where("id = :id", { id })
+            .execute()
     }
 
     async deleteUser(id: number): Promise<DeleteResult> {

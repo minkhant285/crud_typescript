@@ -1,14 +1,16 @@
 import http from 'http';
 import express, { Express } from 'express';
-import { envData } from './environment';
+import { envData } from './utils/environment';
 import routes from './routes/user.routes';
 import "reflect-metadata"
 import { AppDataSource } from './db/data-source';
+import path from 'path';
 
 const router: Express = express();
 
 /** Parse the request */
 router.use(express.urlencoded({ extended: false }));
+router.use('/static', express.static(path.join(__dirname, '../assets')))
 
 /** Takes care of JSON data */
 router.use(express.json());

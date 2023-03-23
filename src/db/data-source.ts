@@ -1,5 +1,5 @@
 import { DataSource } from "typeorm";
-import { envData } from "../environment";
+import { envData } from "../utils/environment";
 import { User } from "./entities/user.entity";
 
 export const AppDataSource = new DataSource({

@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
-import { IUser } from '../models/user.model';
+import { IUser, IUserInput } from '../models/user.model';
 import { UserService } from '../services/user.service';
+import { upload } from '../utils/diskStorage';
 
 let userService = new UserService();
 //get all users
@@ -46,7 +47,7 @@ const deleteUser = async (req: Request, res: Response) => {
 // adding a user
 const addUser = async (req: Request, res: Response) => {
     // get the data from req.body
-    let body: IUser = req.body;
+    let body: IUserInput = req.body;
     let created = await userService.createUser(body);
     // return response
     return res.status(201).json({
@@ -55,4 +56,18 @@ const addUser = async (req: Request, res: Response) => {
     });
 };
 
-export default { getUsers, getUser, updateUser, deleteUser, addUser };
+const uploadPhoto = async (req: Request, res: Response) => {
+    try {
+        userService.updatePhoto(Number.parseInt(req.params.id), req.file?.filename.toString() || '');
+        res.status(200).json({
+            status: "success",
+            message: "File created successfully!!",
+        });
+    } catch (error) {
+        res.json({
+            error,
+        });
+    }
+}
+
+export default { getUsers, getUser, updateUser, deleteUser, addUser, uploadPhoto };

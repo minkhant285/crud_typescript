@@ -4,7 +4,13 @@ import { Entity, Column, PrimaryGeneratedColumn } from "typeorm"
 export class User {
 
     @PrimaryGeneratedColumn()
-    id: number
+    id: number;
+
+    @Column()
+    email: string;
+
+    @Column({ select: false })
+    password: string;
 
     @Column()
     name: string;
@@ -14,5 +20,11 @@ export class User {
 
     @Column()
     address: string;
+
+    @Column()
+    phone: string;
+
+    @Column({ nullable: true })
+    photoUrl: string;
 
 }
