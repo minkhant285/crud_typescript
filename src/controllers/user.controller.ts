@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import { IUser, IUserInput } from '../models/user.model';
 import { UserService } from '../services/user.service';
-import { upload } from '../utils/diskStorage';
 
 let userService = new UserService();
 //get all users
@@ -15,12 +14,20 @@ const getUsers = async (req: Request, res: Response) => {
 
 //get user with id
 const getUser = async (req: Request, res: Response) => {
-    let id: string = req.params.id;
-    let user: IUser | null = await userService.selectUserById(Number.parseInt(id));
-    return res.status(200).json({
-        data: user,
-        status: res.statusCode
-    });
+    let id: string = req.params.id || '0';
+    console.log(req.params.id);
+    if (id === undefined) {
+        return res.status(404).json({
+            data: 'no data'
+        })
+    } else {
+        let user: IUser | null = id ? await userService.selectUserById(Number.parseInt(id)) : null;
+        return res.status(200).json({
+            data: user,
+            status: res.statusCode
+        });
+
+    }
 };
 
 // updating a user
