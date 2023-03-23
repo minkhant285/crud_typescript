@@ -8,6 +8,6 @@ router.get('/users/:id', controller.getUser);
 router.put('/users/:id', controller.updateUser);
 router.delete('/users/:id', controller.deleteUser);
 router.post('/users', controller.addUser);
-router.post('/users/:id/photo', upload.single('file'), controller.uploadPhoto);
+router.put('/users/:id/photo', upload.single('file'), controller.uploadPhoto);
 
 export = router;

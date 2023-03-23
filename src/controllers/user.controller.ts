@@ -15,7 +15,6 @@ const getUsers = async (req: Request, res: Response) => {
 //get user with id
 const getUser = async (req: Request, res: Response) => {
     let id: string = req.params.id || '0';
-    console.log(req.params.id);
     if (id === undefined) {
         return res.status(404).json({
             data: 'no data'
